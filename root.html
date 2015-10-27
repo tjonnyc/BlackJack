@@ -1,10 +1,123 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en-US">
 <head>
-    <meta charset="UTF-8">
-    <title></title>
-</head>
-<body>
+<title>MFKN Blackjack Website</title>
+    <script>
 
+        function start() {
+            dealerHand = [generateCard(), generateCard()];
+            playerHand = [generateCard(), generateCard(),0,0,0];
+            document.getElementById("dealerCardOne").src = "/BlackJack/images/" + dealerHand[0] + ".jpg";
+            document.getElementById("cardOne").src = "/BlackJack/images/" + playerHand[0] + ".jpg";
+            document.getElementById("cardTwo").src = "/BlackJack/images/" + playerHand[1] + ".jpg";
+        }
+
+        //returns a random card value
+        function generateCard() {
+            var x = Math.floor(Math.random() * 13) + 1;
+            if (x == 1) { x = "Ace";}
+            else if (x == 11) { x = "Jack";}
+            else if (x == 12) { x = "Queen";}
+            else if (x == 13) { x = "King";}
+            return x;
+        }
+
+        //accepts hand and calculates the value
+        function evaluateHand(hand) {
+            var aceInHand = false;
+            var total = 0;
+            for (i==0; i < hand.length; i++)
+            {
+                if (hand[i] == "Ace" && aceInHand == false)
+                    aceInHand = true;
+                else
+                    total += evaluateCard(hand[i]);
+            }
+            if (aceInHand == true)
+            {
+                if (total <= 10)
+                    total += 11;
+                else
+                    total += 1;
+            }
+            return total;
+        }
+
+        //accepts a card and returns the value; assumes Aces are 1
+        function evaluateCard(card) {
+            if (card == "Jack")
+                return 10;
+            else if (card == "Queen")
+                return 10;
+            else if (card == "King")
+                return 10;
+            else if (card == "Ace")
+                return 1;
+            else
+                return card;
+        }
+
+        //defines action of the 'Stay' button
+        function stay() {
+            document.getElementById("dealerCardTwo").removeAttribute("hidden");
+            document.getElementById("dealerCardTwo").src = "/BlackJack/images/" + dealerHand[1] + ".jpg";
+
+            if (evaluateHand(playerHand) > evaluateHand(dealerHand))
+                alert('You win!');
+            else
+                alert('You lose!');
+            location.reload();
+        }
+
+        //defines action of the 'Hit' button
+        function hit() {
+            if (playerHand[2] == 0)
+            {
+                playerHand[2] = generateCard();
+                document.getElementById("cardThree").removeAttribute("hidden");
+                document.getElementById("cardThree").src = "/BlackJack/images/" + playerHand[2] + ".jpg";
+            }
+            else if (playerHand[3] == 0)
+            {
+                playerHand[3] = generateCard();
+                document.getElementById("cardFour").removeAttribute("hidden");
+                document.getElementById("cardFour").src = "/BlackJack/images/" + playerHand[3] + ".jpg";
+            }
+            else if (playerHand[4] == 0)
+            {
+                playerHand[4] = generateCard();
+                document.getElementById("cardFive").removeAttribute("hidden");
+                document.getElementById("cardFive").src = "/BlackJack/images/" + playerHand[4] + ".jpg";
+            }
+            else
+            {
+                alert('No more cards :(');
+            }
+
+            if (evaluateHand(playerHand) > 21)
+            {
+                alert('You bust!');
+                location.reload();
+            }
+        }
+
+    </script>
+</head>
+<body onload="start()">
+	<fieldset>
+		<legend>Let's play some Black Jack:</legend>
+		<h1>Dealer is Showing:</h1>
+		<img id="dealerCardOne" src="/BlackJack/images/5.jpg">
+		<img id="dealerCardTwo" hidden src="/BlackJack/images/5.jpg">
+		<h1>You Have:</h1>
+		<img id="cardOne" src="/BlackJack/images/5.jpg">
+		<img id="cardTwo" src="/BlackJack/images/5.jpg">
+        <img id="cardThree" hidden src="/BlackJack/images/5.jpg">
+        <img id="cardFour" hidden src="/BlackJack/images/5.jpg">
+        <img id="cardFive" hidden src="/BlackJack/images/5.jpg">
+		<br>
+        <button type="button" onclick="hit()">Hit</button>
+		<button type="button" onclick="stay()">Stay</button>
+	</fieldset>
 </body>
 </html>
