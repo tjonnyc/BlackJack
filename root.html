@@ -1,8 +1,8 @@
 <!-- To Do List
 1) DONE - Make sure this committed to master and Ryan can download it
-2) Fix the code so that it works
+2) DONE - Fix the code so that it works
 3) Enable correct dealer process (e.g. more than 2 cards)
-4) Enable infinite player cards
+4) DONE - Enable infinite player cards
 5) Improve graphics
 6) Refine web layout.
 -->
@@ -19,7 +19,7 @@
 
         function start() {
             dealerHand = [generateCard(), generateCard()];
-            playerHand = [generateCard(), generateCard(),0,0,0];
+            playerHand = [generateCard(), generateCard()];
             document.getElementById("dealerCardOne").src = "/BlackJack/images/" + dealerHand[0] + ".jpg";
             document.getElementById("cardOne").src = "/BlackJack/images/" + playerHand[0] + ".jpg";
             document.getElementById("cardTwo").src = "/BlackJack/images/" + playerHand[1] + ".jpg";
@@ -88,28 +88,11 @@
 
         //defines action of the 'Hit' button
         function hit() {
-            if (playerHand[2] == 0)
-            {
-                playerHand[2] = generateCard();
-                document.getElementById("cardThree").removeAttribute("hidden");
-                document.getElementById("cardThree").src = "/BlackJack/images/" + playerHand[2] + ".jpg";
-            }
-            else if (playerHand[3] == 0)
-            {
-                playerHand[3] = generateCard();
-                document.getElementById("cardFour").removeAttribute("hidden");
-                document.getElementById("cardFour").src = "/BlackJack/images/" + playerHand[3] + ".jpg";
-            }
-            else if (playerHand[4] == 0)
-            {
-                playerHand[4] = generateCard();
-                document.getElementById("cardFive").removeAttribute("hidden");
-                document.getElementById("cardFive").src = "/BlackJack/images/" + playerHand[4] + ".jpg";
-            }
-            else
-            {
-                alert('No more cards :(');
-            }
+            playerHand.push(generateCard());
+
+            var img = document.createElement('img');
+            img.src = "/BlackJack/images/" + playerHand[playerHand.length - 1] + ".jpg";
+            document.getElementById('playerCards').appendChild(img)
 
             if (evaluateHand(playerHand) > 21)
             {
@@ -124,15 +107,16 @@
 	<fieldset>
 		<legend>Let's play some Black Jack:</legend>
 		<h1>Dealer is Showing:</h1>
-		<img id="dealerCardOne" src="/BlackJack/images/5.jpg">
-		<img id="dealerCardTwo" hidden src="/BlackJack/images/5.jpg">
-		<h1>You Have:</h1>
-		<img id="cardOne" src="/BlackJack/images/5.jpg">
-		<img id="cardTwo" src="/BlackJack/images/5.jpg">
-        <img id="cardThree" hidden src="/BlackJack/images/5.jpg">
-        <img id="cardFour" hidden src="/BlackJack/images/5.jpg">
-        <img id="cardFive" hidden src="/BlackJack/images/5.jpg">
-		<br>
+		<div id="dealerCards">
+            <img id="dealerCardOne" src="/BlackJack/images/5.jpg">
+		    <img id="dealerCardTwo" hidden src="/BlackJack/images/5.jpg">
+		</div>
+        <h1>You Have:</h1>
+		<div id="playerCards">
+            <img id="cardOne" src="/BlackJack/images/5.jpg">
+            <img id="cardTwo" src="/BlackJack/images/5.jpg">
+        </div>
+        <br>
         <button type="button" onclick="hit()">Hit</button>
 		<button type="button" onclick="stay()">Stay</button>
 	</fieldset>
