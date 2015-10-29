@@ -1,5 +1,5 @@
 <!-- To Do List
-1) Make sure this committed to master and Ryan can download it
+1) DONE - Make sure this committed to master and Ryan can download it
 2) Fix the code so that it works
 3) Enable correct dealer process (e.g. more than 2 cards)
 4) Enable infinite player cards
@@ -15,6 +15,7 @@
 
         //neutral comment
         //angry comment
+        //happy comment
 
         function start() {
             dealerHand = [generateCard(), generateCard()];
@@ -35,17 +36,19 @@
         }
 
         //accepts hand and calculates the value
+        //change comment #1 - changed i==0 to i=0 in the for loop
+        //change comment #2 - changed aceInHand to an integer to deal with the multiple ace case
         function evaluateHand(hand) {
-            var aceInHand = false;
+            var aceInHand = 0;
             var total = 0;
-            for (i==0; i < hand.length; i++)
+            for (i=0; i < hand.length; i++)
             {
-                if (hand[i] == "Ace" && aceInHand == false)
-                    aceInHand = true;
+                if (hand[i] == "Ace")
+                    aceInHand += 1;
                 else
                     total += evaluateCard(hand[i]);
             }
-            if (aceInHand == true)
+            for (i=0; i < aceInHand; i++)
             {
                 if (total <= 10)
                     total += 11;
@@ -56,28 +59,30 @@
         }
 
         //accepts a card and returns the value; assumes Aces are 1
+        //Tyler Change #1 - throws an error if the card is an Ace should never happen
+        //Tyler Change #2 - consolidated the Jack, Queen, King if statements into one using 'or' operators
         function evaluateCard(card) {
-            if (card == "Jack")
-                return 10;
-            else if (card == "Queen")
-                return 10;
-            else if (card == "King")
+            if (card == "Jack" || card == "Queen" || card == "King")
                 return 10;
             else if (card == "Ace")
-                return 1;
+                alert('evaluateCare function is evaluating an Ace');
             else
                 return card;
         }
 
         //defines action of the 'Stay' button
+        //Tyler Change #1 - added a tie option
         function stay() {
             document.getElementById("dealerCardTwo").removeAttribute("hidden");
             document.getElementById("dealerCardTwo").src = "/BlackJack/images/" + dealerHand[1] + ".jpg";
 
             if (evaluateHand(playerHand) > evaluateHand(dealerHand))
-                alert('You win!');
+                alert('You win - yay!');
+            else if (evaluateHand(playerHand) == evaluateHand(dealerHand))
+                alert('It is a TIE!');
             else
-                alert('You lose!');
+                alert('You LOSE - so sorry!');
+
             location.reload();
         }
 
