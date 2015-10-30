@@ -20,9 +20,9 @@
         function start() {
             dealerHand = [generateCard(), generateCard()];
             playerHand = [generateCard(), generateCard()];
-            document.getElementById("dealerCardOne").src = "/BlackJack/images/" + dealerHand[0] + ".jpg";
-            document.getElementById("cardOne").src = "/BlackJack/images/" + playerHand[0] + ".jpg";
-            document.getElementById("cardTwo").src = "/BlackJack/images/" + playerHand[1] + ".jpg";
+            document.getElementById("dealerCardOne").src = "./images/" + dealerHand[0] + ".jpg";
+            document.getElementById("cardOne").src = "./images/" + playerHand[0] + ".jpg";
+            document.getElementById("cardTwo").src = "./images/" + playerHand[1] + ".jpg";
         }
 
         //returns a random card value
@@ -74,7 +74,7 @@
         //Tyler Change #1 - added a tie option
         function stay() {
             document.getElementById("dealerCardTwo").removeAttribute("hidden");
-            document.getElementById("dealerCardTwo").src = "/BlackJack/images/" + dealerHand[1] + ".jpg";
+            document.getElementById("dealerCardTwo").src = "./images/" + dealerHand[1] + ".jpg";
 
             if (evaluateHand(playerHand) > evaluateHand(dealerHand))
                 alert('You win - yay!');
@@ -91,7 +91,7 @@
             playerHand.push(generateCard());
 
             var img = document.createElement('img');
-            img.src = "/BlackJack/images/" + playerHand[playerHand.length - 1] + ".jpg";
+            img.src = "./images/" + playerHand[playerHand.length - 1] + ".jpg";
             document.getElementById('playerCards').appendChild(img)
 
             if (evaluateHand(playerHand) > 21)
@@ -108,13 +108,13 @@
 		<legend>Let's play some Black Jack:</legend>
 		<h1>Dealer is Showing:</h1>
 		<div id="dealerCards">
-            <img id="dealerCardOne" src="/BlackJack/images/5.jpg">
-		    <img id="dealerCardTwo" hidden src="/BlackJack/images/5.jpg">
+            <img id="dealerCardOne" src="./images/5.jpg">
+		    <img id="dealerCardTwo" hidden src="./images/5.jpg">
 		</div>
         <h1>You Have:</h1>
 		<div id="playerCards">
-            <img id="cardOne" src="/BlackJack/images/5.jpg">
-            <img id="cardTwo" src="/BlackJack/images/5.jpg">
+            <img id="cardOne" src="./images/5.jpg">
+            <img id="cardTwo" src="./images/5.jpg">
         </div>
         <br>
         <button type="button" onclick="hit()">Hit</button>
